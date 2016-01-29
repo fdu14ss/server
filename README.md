@@ -5,44 +5,44 @@ a simple server based on flask
 according to the requirements, this server does not conform to REST exactly but uses verbs in part of its urls.
 
 ###/login 
-####POST 
+- POST 
 
-```json
-{"username": "user",
-"password": "pw" }
-```
+	```json
+	{"username": "user",
+	"password": "pw" }
+	```
   
 
 ###/logout
-####GET
+- GET
 
 
 ###/users
-####POST
-
-create a new user
+- POST
 	
-```json
-{"username": "user",
-"password": "pw" }
-```
+	create a new user
+	
+	```json
+	{"username": "user",
+	"password": "pw" }
+	```
 	
 ###/users/username
-####GET
-get basic info of the relavant user
+- GET
+	get basic info of the relavant user
 
 ###/users/username/projects
-####POST
-save a new project 
+- POST
+	save a new project 
 
 ###/users/username/projects/pj_id
-####GET
-get it 
+- GET
+	get it 
 
-####UPDATE
-edit the corresponding project
+- UPDATE
+	edit the corresponding project
 
-####DELETE
+- DELETE
 
 
 ###TODO:

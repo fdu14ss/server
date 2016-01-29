@@ -1,22 +1,16 @@
-from flask import Flask
+
+
 from flask import request
 import flask.ext.login as flask_login
 import flask
-import json
+from server import app
+from server.models import User
+from server.models import users
+# our mock database
 
-app = Flask(__name__)
-# TODO:change the secret_key
-app.secret_key = 'super secret string'
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-
-# our mock database
-users = {'usr': {'pw': 'pw'}}
-
-
-class User(flask_login.UserMixin):
-    pass
 
 
 @login_manager.user_loader
@@ -24,22 +18,19 @@ def user_loader(email):
     if email not in users:
         return
     else:
-        user = User()
-        user.id = email
+        user = User.get(email)
         return user
 
 
 @login_manager.request_loader
 def request_loader(request):
-    email = request.form.get('email')
+    req = request.get_json()
+    email = req['email']
     if email not in users:
         return
     else:
-        user = User()
-        user.id = email
-
-        user.is_authenticated = request.form['pw'] == users[email]['pw']
-
+        user = User.get(email)
+        user.is_authenticated = req['pw'] == users[email]['pw']
         return user
 
 
@@ -52,20 +43,14 @@ def home():
 def login():
     # app.logger.debug('what the hell')
     if flask.request.method == 'GET':
-        return '''
-                   <form action='login' method='POST'>
-                    <input type='text' name='email' id='email' placeholder='email'></input>
-                    <input type='password' name='pw' id='pw' placeholder='password'></input>
-                    <input type='submit' name='submit'></input>
-                   </form>
-                   '''
+        return
 
-    email = flask.request.form['email']
+    req = flask.request.get_json()
+    email = req['email']
     # app.logger.debug(email)
     # app.logger.debug(users[email])
-    if request.form['pw'] == users[email]['pw']:
-        user = User()
-        user.id = email
+    if req['pw'] == users[email]['pw']:
+        user = User.get(email)
         # app.logger.debug(user.get_id())
         flask_login.login_user(user)
         app.logger.debug('current user: ' + flask_login.current_user.id)
@@ -91,6 +76,3 @@ def logout():
 def unauthorized_handler():
     return 'Unauthorized'
 
-
-if __name__ == '__main__':
-    app.run(debug=True)

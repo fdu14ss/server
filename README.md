@@ -3,38 +3,49 @@ a simple server based on flask
 
 ##API
 according to the requirements, this server does not conform to REST exactly but uses verbs in part of its urls.
-/login POST 
-{'username': 'user',
-  'password': 'pw' }
 
-/logout GET
+###/login 
+####POST 
+
+```json
+{"username": "user",
+"password": "pw" }
+```
+  
+
+###/logout
+####GET
 
 
-/users
-POST:
+###/users
+####POST
+
 create a new user
-{'username': 'user',
-  'password': 'pw' }
-
-/users/username
-GET:
+	
+```json
+{"username": "user",
+"password": "pw" }
+```
+	
+###/users/username
+####GET
 get basic info of the relavant user
 
-/users/username/projects
-POST:
+###/users/username/projects
+####POST
 save a new project 
 
-/users/username/projects/pj_id
-GET:
+###/users/username/projects/pj_id
+####GET
 get it 
 
-UPDATE:
+####UPDATE
 edit the corresponding project
 
-DELETE:
+####DELETE
 
 
-##TODO:
+###TODO:
 share
 
 

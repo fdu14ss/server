@@ -5,7 +5,7 @@ a simple server based on flask
 according to the requirements, this server does not conform to REST exactly but uses verbs in part of its urls.
 
 ###/login 
-- POST 
+- **POST** 
 
 	```json
 	{"username": "user",
@@ -14,11 +14,11 @@ according to the requirements, this server does not conform to REST exactly but 
   
 
 ###/logout
-- GET
+- **GET**
 
 
 ###/users
-- POST
+- **POST**
 	
 	create a new user
 	
@@ -28,21 +28,25 @@ according to the requirements, this server does not conform to REST exactly but 
 	```
 	
 ###/users/username
-- GET
+- **GET**
+
 	get basic info of the relavant user
 
 ###/users/username/projects
-- POST
+- **POST**
+
 	save a new project 
 
 ###/users/username/projects/pj_id
-- GET
+- **GET**
+
 	get it 
 
-- UPDATE
+- **UPDATE**
+
 	edit the corresponding project
 
-- DELETE
+- **DELETE**
 
 
 ###TODO:

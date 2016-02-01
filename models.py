@@ -1,8 +1,8 @@
-from server import app
-import flask.ext.login as flask_login
-from server import db
 
-users = {'email': {'pw': 'pw'}}
+import flask.ext.login as flask_login
+from app import app, db
+
+users = {'wjt': {'pw': 'pw'}}
 
 
 class User(flask_login.UserMixin):

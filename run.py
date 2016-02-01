@@ -1,3 +1,6 @@
-from server import app
+import routes
 
+
+app = routes.app
 app.run(debug=True)
+

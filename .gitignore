@@ -2,3 +2,7 @@ __pycache__
 .DS_Store
 .idea
 .python-version
+logs
+uwsgi.log
+uwsgiconfig.xml
+nginx_dir.txt

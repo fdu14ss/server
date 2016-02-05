@@ -13,11 +13,11 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader  # reload the user from session
-def user_loader(email):
-    if email not in users:
+def user_loader(username):
+    if username not in users:
         return
     else:
-        user = User.get(email)
+        user = User.get(username)
         return user
 
 
@@ -28,12 +28,12 @@ def request_loader(request):
         return
     else:
         req = request.get_json()
-        email = req['email']
-        if email not in users:
-            return 'shit'
+        username = req['username']
+        if username not in users:
+            return 'error'
         else:
-            user = User.get(email)
-            user.is_authenticated = req['pw'] == users[email]['pw']
+            user = User.get(username)
+            user.is_authenticated = req['pw'] == users[username]['pw']
             return user
 
 

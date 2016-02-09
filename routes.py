@@ -1,13 +1,26 @@
+import os
+
 import functools
 import flask
+
+from werkzeug.utils import secure_filename
 
 from app import app
 from auth import flask_login
 from models import User, users
 
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'txt'}
+UPLOAD_FOLDER = 'projects'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 def print_current_user():
     app.logger.debug('current user: ' + flask_login.current_user.id)
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 def post_only(func):
@@ -62,4 +75,29 @@ def get_static(username, project_id):
     # print_current_user()
     if flask_login.current_user.id == username:
         return flask.send_from_directory('projects', str(project_id)+'.png')
+
+
+@app.route('/users/<username>/projects/', methods=['GET', 'POST'])
+# @flask_login.login_required
+def upload_project(username):
+    if flask.request.method == 'GET':
+        return  '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
+
+    else:
+        file = flask.request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return flask.jsonify({'status': True})
+        else:
+            return flask.jsonify({'status': False})
+
 

@@ -78,7 +78,7 @@ def get_static(username, project_id):
 
 
 @app.route('/users/<username>/projects/', methods=['GET', 'POST'])
-# @flask_login.login_required
+@flask_login.login_required
 def upload_project(username):
     if flask.request.method == 'GET':
         return  '''

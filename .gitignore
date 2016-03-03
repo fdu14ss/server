@@ -6,3 +6,5 @@ logs
 uwsgi.log
 uwsgiconfig.xml
 nginx_dir.txt
+clover.sublime-project
+clover.sublime-workspace

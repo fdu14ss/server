@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 
 
-client = MongoClient()
+client = MongoClient(connect=False)
 db = client.flask_db
-collection = db.flask_collection
 

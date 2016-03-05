@@ -17,7 +17,7 @@ according to the requirements, this server does not conform to REST exactly but 
 	```json
 	成功:
 		{
-			"status": True
+			"status": true
 		}
 	
 		or
@@ -25,7 +25,7 @@ according to the requirements, this server does not conform to REST exactly but 
 		
 	失败:
 		{
-			"status": False,
+			"status": false,
 			"cause": "the reason or cause of this failure"
 		}
 
@@ -38,7 +38,7 @@ according to the requirements, this server does not conform to REST exactly but 
 	```json
 	未登录:
 		{
-			"status": False,
+			"status": false,
      		"cause": "unauthorized"
      	}
      	
@@ -47,7 +47,7 @@ according to the requirements, this server does not conform to REST exactly but 
      	
     已登录:
     	{
-    		"status": True
+    		"status": true
     	}
 	```
 	
@@ -67,24 +67,24 @@ according to the requirements, this server does not conform to REST exactly but 
 	
 	```json
 		{
-			"status": False, 
+			"status": false, 
 			"cause": "username already exists"
 		}
 		
 		or
 		
 		{
-    		"status": True
+    		"status": true
     	}
 	```
 	
 ###/users/username/projects/pj_id
 
-ATTENTION: POST and DELETE requires login. Otherwise the server returns 
+ATTENTION: POST and DELETE require login. Otherwise the server returns 
 
 ```json
 {
-	"status": False, 
+	"status": false, 
 	"cause": "unauthroized"
 }
 ```
@@ -106,14 +106,14 @@ ATTENTION: POST and DELETE requires login. Otherwise the server returns
 		
 	```json
 		{
-			"status": False, 
+			"status": falsefalse, 
 			"cause": "cause"
 		}
 		
 		or
 		
 		{
-    		"status": True
+    		"status": true
     	}
 	```
 	
@@ -124,14 +124,14 @@ ATTENTION: POST and DELETE requires login. Otherwise the server returns
 	
 	```json
 		{
-			"status": False, 
+			"status": false, 
 			"cause": "cause"
 		}
 		
 		or
 		
 		{
-    		"status": True
+    		"status": true
    
 	```
 

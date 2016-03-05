@@ -89,12 +89,6 @@ ATTENTION: POST and DELETE require login. Otherwise the server returns
 }
 ```
 
-
-- **GET**
-
-	return the cover html for corresponding project. 
-	use this to **share** the project.
-
 - **POST**
 
 	what this route cares about is the uploaded file.
@@ -135,6 +129,13 @@ ATTENTION: POST and DELETE require login. Otherwise the server returns
    
 	```
 
+
+###/users/username/projects/pj_id/share
+
+- **GET**
+
+	return the cover html for corresponding project. 
+	use this to **share** the project.
 
 	
 	

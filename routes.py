@@ -134,7 +134,7 @@ def logout():
     return flask.jsonify({'status': True})
 
 
-@app.route('/users/<username>/projects/<int:project_id>', methods=['GET'])
+@app.route('/users/<username>/projects/<int:project_id>', methods=['POST', 'DELETE'])
 @flask_login.login_required
 def get_static(username, project_id):
     # print_current_user()

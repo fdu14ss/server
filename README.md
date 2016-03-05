@@ -106,7 +106,7 @@ ATTENTION: POST and DELETE require login. Otherwise the server returns
 		
 	```json
 		{
-			"status": falsefalse, 
+			"status": false, 
 			"cause": "cause"
 		}
 		

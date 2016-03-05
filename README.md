@@ -11,13 +11,49 @@ according to the requirements, this server does not conform to REST exactly but 
 	{"username": "user",
 	"password": "pw" }
 	```
+
+	return:
+	
+	```json
+	成功:
+		{
+			"status": True
+		}
+	
+		or
+		
+		
+	失败:
+		{
+			"status": False,
+			"cause": "the reason or cause of this failure"
+		}
+
+	```
   
 
 ###/logout
 - **GET**
 
+	```json
+	未登录:
+		{
+			"status": False,
+     		"cause": "unauthorized"
+     	}
+     	
+     	or
+     	
+     	
+    已登录:
+    	{
+    		"status": True
+    	}
+	```
+	
 
-###/users
+
+###/register
 - **POST**
 	
 	create a new user
@@ -27,64 +63,82 @@ according to the requirements, this server does not conform to REST exactly but 
 	"password": "pw" }
 	```
 	
-###/users/username
-- **GET**
-
-	get basic info of the relavant user
-
-###/users/username/projects
-- **POST**
-
+	return:
+	
 	```json
-		example:
-	
-	{
-		//假设这是头部
-		"username": "john",
-		"project_id": 1,
-		"action_id": 1,
-	
-	
-		"file": {
-			"file_name": "a.html",
-			"file_content": "12rdfdfs3" //一段base64代码，或者直接上传，看最后怎么实现
+		{
+			"status": False, 
+			"cause": "username already exists"
 		}
-	}
+		
+		or
+		
+		{
+    		"status": True
+    	}
+	```
 	
-	...
-	
-	{
-		//假设这是头部
-		"username": "john",
-		"project_id": 1,
-		"action_id": 1,
-	
-	
-		"file": {
-			"file_name": "a.css",
-			"file_content": "sfa3516" //一段base64代码，或者直接上传，看最后怎么实现
-		}
-	}
+###/users/username/projects/pj_id
+
+ATTENTION: POST and DELETE requires login. Otherwise the server returns 
+
+```json
+{
+	"status": False, 
+	"cause": "unauthroized"
+}
 ```
 
 
-	save a new project 
-
-###/users/username/projects/pj_id
 - **GET**
 
-	get it 
+	return the cover html for corresponding project. 
+	use this to **share** the project.
 
-- **UPDATE**
+- **POST**
 
-	edit the corresponding project
-
+	what this route cares about is the uploaded file.
+	any file will be saved to replace the former file in this project
+	
+	if the project with the pj_id does not exist yet, then it will be created 	and your file will be saved too.
+	
+	return:
+		
+	```json
+		{
+			"status": False, 
+			"cause": "cause"
+		}
+		
+		or
+		
+		{
+    		"status": True
+    	}
+	```
+	
 - **DELETE**
+	
+	the whole project folder will be deleted from the server.
+
+	
+	```json
+		{
+			"status": False, 
+			"cause": "cause"
+		}
+		
+		or
+		
+		{
+    		"status": True
+   
+	```
 
 
-###TODO:
-share
-
+	
+	
+	
 
 
 

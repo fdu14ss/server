@@ -11,7 +11,8 @@ from models import User
 
 from flask import request, jsonify, g
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'txt'}
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'txt','html', 'css', 'js'}
 UPLOAD_FOLDER = 'projects'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -68,56 +69,62 @@ def home():
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@post_only
+@before_login_only
 def register():
-    if request.method == 'GET':
-        return  '''
-    <!doctype html>
-    <title>User Register</title>
-    <h1>register</h1>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=text name=username>
-        <input type=password name=password>
-         <input type=submit value=register>
-    </form>
-    '''
-    else:
-        username = request.form['username']
-        password = request.form['password']
-        return jsonify(User.register(username, password))
+    # if request.method == 'GET':
+    #     return  '''
+    # <!doctype html>
+    # <title>User Register</title>
+    # <h1>register</h1>
+    # <form action="" method=post enctype=multipart/form-data>
+    #   <p><input type=text name=username>
+    #     <input type=password name=password>
+    #      <input type=submit value=register>
+    # </form>
+    # '''
+
+    username = request.json['username']
+    password = request.json['password']
+    return jsonify(User.register(username, password))
 
 
 # 登入/登出
 @app.route('/login', methods=['GET', 'POST'])
+@post_only
 @before_login_only
 def login():
-    if request.method == 'GET':
-        # if g.user is not None and g.user.is_authenticated:
-            # return jsonify({'status': False, 'cause': 'already logged in'})
-        Logger.info('login GET')
-        return  '''
-        <!doctype html>
-        <title>Login</title>
-        <h1>login</h1>
-        <form action="" method=post enctype=multipart/form-data>
-          <p><input type=text name=username>
-            <input type=password name=password>
-             <input type=submit value=login>
-        </form>
-        '''
-    else:
-        username = request.form['username']
-        password = request.form['password']
-        Logger.info('login POST')
+    #
+    #
+    # if request.method == 'GET':
+    #     # if g.user is not None and g.user.is_authenticated:
+    #         # return jsonify({'status': False, 'cause': 'already logged in'})
+    #     Logger.info('login GET')
+    #     return jsonify({'status': False, 'cause': 'only POST is allowed'})
+    #     # return  '''
+    #     # <!doctype html>
+    #     # <title>Login</title>
+    #     # <h1>login</h1>
+    #     # <form action="" method=post enctype=multipart/form-data>
+    #     #   <p><input type=text name=username>
+    #     #     <input type=password name=password>
+    #     #      <input type=submit value=login>
+    #     # </form>
+    #     # '''
 
-        auth_result = User.auth(username, password)
-        if auth_result['status']:
-            Logger.debug('before login_user')
-            user = User.get(username)
-            flask_login.login_user(user)
-            Logger.debug('after login_user')
-            return flask.jsonify({'status': True})
-        else:
-            return flask.jsonify(auth_result)
+    username = request.json['username']
+    password = request.json['password']
+    Logger.info('login POST')
+
+    auth_result = User.auth(username, password)
+    if auth_result['status']:
+        Logger.debug('before login_user')
+        user = User.get(username)
+        flask_login.login_user(user)
+        Logger.debug('after login_user')
+        return flask.jsonify({'status': True})
+    else:
+        return flask.jsonify(auth_result)
 
 
 @app.route('/logout', methods=['GET'])
@@ -150,13 +157,13 @@ def upload_project(username):
     '''
 
     else:
-        file = flask.request.files['file']
+        file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return flask.jsonify({'status': True})
+            return jsonify({'status': True})
         else:
-            return flask.jsonify({'status': False})
+            return jsonify({'status': False})
 
 
 @app.route('/after_login', methods=['GET'])
